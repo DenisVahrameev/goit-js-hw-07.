@@ -1,0 +1,103 @@
+Завдання 1
+const categories = document.querySelector('#categories');
+const items = categories.querySelectorAll('.item');
+
+console.log(`Number of categories: ${items.length}\n`);
+
+items.forEach(item => {
+  const title = item.querySelector('h2').textContent;
+  const elements = item.querySelectorAll('li').length;
+  console.log(`Category: ${title}\nElements: ${elements}\n`);
+});
+
+Спочатку ми знаходимо елемент з id="categories" і зберігаємо його у змінну categories. Потім ми знаходимо всі елементи з класом "item" всередині categories і зберігаємо їх у змінну items. За допомогою властивості length ми можемо вивести кількість елементів у масиві items у першому повідомленні.
+
+Потім ми проходимося по кожному елементу масиву items за допомогою методу forEach і для кожного елементу знаходимо заголовок (тег h2) та кількість елементів у списку (усіх тегів li вкладених в нього). Ці значення виводимо в консоль у другому повідомленні. Обидва повідомлення відокремлюємо переносом рядка \n для кращої читабельності.
+
+
+Завдання 2
+
+const ingredientsList = document.querySelector('#ingredients');
+const ingredients = [
+  "Potatoes",
+  "Mushrooms",
+  "Garlic",
+  "Tomatos",
+  "Herbs",
+  "Condiments",
+];
+
+const items = ingredients.map(ingredient => {
+  const item = document.createElement('li');
+  item.textContent = ingredient;
+  item.classList.add('item');
+  return item;
+});
+
+ingredientsList.append(...items);
+
+Спочатку ми знаходимо елемент з id="ingredients" і зберігаємо його у змінну ingredientsList. Потім ми створюємо новий масив items, використовуючи метод map, який проходиться по кожному елементу масиву ingredients та створює новий елемент <li> для кожного інгредієнту. Для кожного створеного елементу ми додаємо текстовий вміст, клас "item" та повертаємо його з методу map.
+
+Нарешті, ми використовуємо метод append для додавання всіх елементів з масиву items у список ingredientsList. Оскільки метод append може приймати кілька елементів як аргументи, ми використовуємо оператор розпакування ... для передачі всіх елементів масиву items як окремих аргументів.
+
+
+Завдання 3
+const gallery = document.querySelector(".gallery");
+
+const imagesMarkup = images.map(({ url, alt }) => {
+  return `
+    <li class="gallery__item">
+      <img class="gallery__image" src="${url}" alt="${alt}">
+    </li>
+  `;
+}).join("");
+
+gallery.insertAdjacentHTML("beforeend", imagesMarkup);
+
+Спочатку ми знаходимо список .gallery в DOM. Далі ми створюємо розмітку для кожного елементу галереї, використовуючи метод масиву map(). Використовуємо деструктуризацію об'єкту, щоб отримати url та alt зображення.
+
+Після цього ми об'єднуємо розмітку у одному рядку, використовуючи метод масиву join("").
+
+Нарешті, ми використовуємо метод insertAdjacentHTML() для додавання усієї розмітки у кінець списку .gallery. Оформлення галереї можна зробити через CSS класи gallery__item та gallery__image.
+
+
+Завданя 4
+const controls = document.querySelector('#controls');
+const input = controls.querySelector('input');
+const createBtn = controls.querySelector('[data-create]');
+const destroyBtn = controls.querySelector('[data-destroy]');
+const boxes = document.querySelector('#boxes');
+
+function getRandomHexColor() {
+  return `#${Math.floor(Math.random() * 16777215)
+    .toString(16)
+    .padStart(6, 0)}`;
+}
+
+function createBoxes(amount) {
+  const fragment = document.createDocumentFragment();
+  let size = 30;
+
+  for (let i = 0; i < amount; i += 1) {
+    const div = document.createElement('div');
+    div.style.width = `${size}px`;
+    div.style.height = `${size}px`;
+    div.style.backgroundColor = getRandomHexColor();
+    fragment.appendChild(div);
+    size += 10;
+  }
+
+  boxes.appendChild(fragment);
+}
+
+function destroyBoxes() {
+  boxes.innerHTML = '';
+}
+
+createBtn.addEventListener('click', () => {
+  createBoxes(Number(input.value));
+});
+
+destroyBtn.addEventListener('click', destroyBoxes);
+
+
